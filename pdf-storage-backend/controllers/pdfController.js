@@ -1,6 +1,7 @@
 // controllers/pdfController.js
 const { upload } = require("../config/db");
 const PdfFile = require("../models/PdfFile");
+const { pdfPrase } = require("./pdfPraser");
 
 const uploadPDF = upload.single("pdf");
 
@@ -42,6 +43,10 @@ const handleUpload = async (req, res) => {
     });
 
     const savedPdf = await newPdf.save();
+
+    const prasedata = pdfPrase(savedPdf.pdf);
+    //console.log(await prasedata);
+    //console.log(JSON.stringify(await prasedata, null, 2));
 
     res.status(201).json({
       message: "File uploaded successfully",
